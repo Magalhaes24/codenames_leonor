@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Grid</title>
+    <title>Code Names Leonor</title>
     <style>
         /* Centering the grid container */
         body, html {
@@ -15,7 +15,7 @@
             font-family: Arial, sans-serif;
         }
 
-        .content{
+        .content {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -74,7 +74,7 @@
             width: 100%;
         }
 
-            .button-19:after {
+        .button-19:after {
             background-clip: padding-box;
             background-color: #1CB0F6;
             border: solid transparent;
@@ -107,11 +107,21 @@
             border-width: 4px 0 0;
             background: none;
         }
+
+        /* Message Styling */
+        .message {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="content">
+        <!-- Message area for Blue's Start or Pink's Start -->
+        <div class="message" id="message"></div>
+
         <div class="grid-container">
             <!-- Creating 16 squares for the grid -->
             <div class="square"></div>
@@ -138,6 +148,7 @@
         function generateColors() {
             // Get all squares
             const squares = document.querySelectorAll('.square');
+            const messageElement = document.getElementById('message');
 
             // Reset colors array
             const colors = [];
@@ -149,10 +160,10 @@
             const orangeCount = 16 - blueCount - pinkCount - blackCount;
 
             // Add colors to array based on the counts
-            colors.push(...Array(blueCount).fill('#558aae'));
-            colors.push(...Array(pinkCount).fill('#d4989b'));
-            colors.push(...Array(blackCount).fill('black'));
-            colors.push(...Array(orangeCount).fill('#e38648'));
+            colors.push(...Array(blueCount).fill('#558aae')); // Blue
+            colors.push(...Array(pinkCount).fill('#d4989b')); // Pink
+            colors.push(...Array(blackCount).fill('black'));  // Black
+            colors.push(...Array(orangeCount).fill('#e38648')); // Orange
 
             // Shuffle the colors array randomly
             for (let i = colors.length - 1; i > 0; i--) {
@@ -164,6 +175,17 @@
             squares.forEach((square, index) => {
                 square.style.backgroundColor = colors[index];
             });
+
+            // Display the message if there's a color start
+            if (blueCount === 6) {
+                messageElement.textContent = "Blue's Start";
+                messageElement.style.color = '#558aae';
+            } else if (pinkCount === 6) {
+                messageElement.textContent = "Pink's Start";
+                messageElement.style.color = '#d4989b';
+            } else {
+                messageElement.textContent = ""; // Clear message if neither condition is met
+            }
         }
 
         // Initial color generation on page load
