@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Grid</title>
+    <style>
+        /* Centering the grid container */
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* Grid styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 80px);
+            grid-template-rows: repeat(4, 80px);
+            gap: 10px;
+        }
+
+        .square {
+            width: 80px;
+            height: 80px;
+            background-color: #e38648; /* Default color */
+            border-radius: 8px;
+        }
+
+        /* Button styling */
+        .refresh_btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button-19 {
+            background-color: #1899D6;
+            border: solid transparent;
+            border-radius: 16px;
+            border-width: 0 0 4px;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            line-height: 20px;
+            margin: 0;
+            outline: none;
+            overflow: visible;
+            padding: 13px 16px;
+            text-align: center;
+            text-transform: uppercase;
+            touch-action: manipulation;
+            transform: translateZ(0);
+            transition: .2s;
+            user-select: none;
+            -webkit-user-select: none;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+            .button-19:after {
+            background-clip: padding-box;
+            background-color: #1CB0F6;
+            border: solid transparent;
+            border-radius: 16px;
+            border-width: 0 0 4px;
+            bottom: -4px;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: -1;
+        }
+
+        .button-19,
+        .button-19:focus {
+            user-select: auto;
+        }
+
+        .button-19:hover:not(:disabled) {
+            filter: brightness(1.1);
+            -webkit-filter: brightness(1.1);
+        }
+
+        .button-19:disabled {
+            cursor: auto;
+        }
+
+        .button-19:active {
+            border-width: 4px 0 0;
+            background: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <div class="grid-container">
+            <!-- Creating 16 squares for the grid -->
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+        <button class="button-19" onclick="generateColors()">Change Colors</button>
+    </div>
+
+    <script>
+        function generateColors() {
+            // Get all squares
+            const squares = document.querySelectorAll('.square');
+
+            // Reset colors array
+            const colors = [];
+
+            // Randomly decide between configurations
+            const blueCount = Math.random() > 0.5 ? 6 : 5;
+            const pinkCount = blueCount === 6 ? 5 : 6;
+            const blackCount = 1;
+            const orangeCount = 16 - blueCount - pinkCount - blackCount;
+
+            // Add colors to array based on the counts
+            colors.push(...Array(blueCount).fill('#558aae'));
+            colors.push(...Array(pinkCount).fill('#d4989b'));
+            colors.push(...Array(blackCount).fill('black'));
+            colors.push(...Array(orangeCount).fill('#e38648'));
+
+            // Shuffle the colors array randomly
+            for (let i = colors.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [colors[i], colors[j]] = [colors[j], colors[i]];
+            }
+
+            // Assign colors to squares
+            squares.forEach((square, index) => {
+                square.style.backgroundColor = colors[index];
+            });
+        }
+
+        // Initial color generation on page load
+        window.onload = generateColors;
+    </script>
+
+</body>
+</html>
